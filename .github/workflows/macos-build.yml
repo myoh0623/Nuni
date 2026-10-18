@@ -12,7 +12,7 @@ permissions:
 
 jobs:
   build:
-    runs-on: macos-14
+    runs-on: macos-15
 
     steps:
       - name: Check out source
@@ -24,7 +24,9 @@ jobs:
           selected_xcode=""
           for candidate in /Applications/Xcode*.app; do
             developer_dir="${candidate}/Contents/Developer"
-            if DEVELOPER_DIR="$developer_dir" xcrun swiftc -swift-version 6 -version >/dev/null 2>&1; then
+            if printf 'actor SwiftSixProbe {}\n' \
+              | DEVELOPER_DIR="$developer_dir" xcrun swiftc -swift-version 6 -typecheck - >/dev/null 2>&1
+            then
               selected_xcode="$developer_dir"
               break
             fi
