@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="1024" height="1024" viewBox="0 0 1024 1024">
+  <defs>
+    <linearGradient id="background" x1="160" y1="96" x2="864" y2="928" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#26385f"/>
+      <stop offset="0.52" stop-color="#17233f"/>
+      <stop offset="1" stop-color="#0a1022"/>
+    </linearGradient>
+    <radialGradient id="iris" cx="0" cy="0" r="1" gradientTransform="translate(476 446) rotate(52) scale(190)">
+      <stop offset="0" stop-color="#fff2a8"/>
+      <stop offset="0.38" stop-color="#69d8ff"/>
+      <stop offset="1" stop-color="#2470f3"/>
+    </radialGradient>
+    <filter id="shadow" x="-20%" y="-25%" width="140%" height="160%">
+      <feDropShadow dx="0" dy="28" stdDeviation="34" flood-color="#02050e" flood-opacity="0.48"/>
+    </filter>
+  </defs>
+  <rect width="1024" height="1024" rx="224" fill="url(#background)"/>
+  <circle cx="802" cy="208" r="92" fill="#ffd979" opacity="0.12"/>
+  <circle cx="174" cy="794" r="136" fill="#4b8cff" opacity="0.1"/>
+  <g filter="url(#shadow)">
+    <path d="M142 512C231 354 363 276 512 276s281 78 370 236c-89 158-221 236-370 236S231 670 142 512Z" fill="#f8fbff"/>
+    <circle cx="512" cy="512" r="155" fill="url(#iris)"/>
+    <circle cx="512" cy="512" r="72" fill="#0a142d"/>
+    <ellipse cx="458" cy="448" rx="42" ry="59" fill="#ffffff" opacity="0.9" transform="rotate(35 458 448)"/>
+  </g>
+  <path d="M187 326 132 252M837 326l55-74M512 226V132" fill="none" stroke="#d9e8ff" stroke-width="28" stroke-linecap="round" opacity="0.84"/>
+</svg>
