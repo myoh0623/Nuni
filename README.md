@@ -6,6 +6,14 @@ Project home: [github.com/myoh0623/Nuni](https://github.com/myoh0623/Nuni) · Cu
 
 The menu-bar eye mirrors the all-displays brightness level: it is fully open at 100%, gradually closes as brightness falls, and is closed at 0%.
 
+## Download
+
+Download the current universal build for Apple Silicon and Intel Macs:
+
+[Download Nuni 1.1.0 for macOS](https://github.com/myoh0623/Nuni/releases/download/v1.1.0/Nuni-1.1.0-macos-universal.zip)
+
+The downloadable build is ad-hoc signed and has not been Apple-notarized. If macOS blocks the first launch, Control-click Nuni, choose **Open**, and confirm once. GitHub Actions also produces a temporary build artifact for every change, while Releases is the permanent public download location.
+
 ## Features
 
 - Manual, built-in-display sync, ambient sensor, solar-location, and clock modes

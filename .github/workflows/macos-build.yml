@@ -1,0 +1,62 @@
+name: macOS build
+
+on:
+  push:
+    branches: [main]
+    tags: ["v*"]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: macos-14
+
+    steps:
+      - name: Check out source
+        uses: actions/checkout@v4
+
+      - name: Test and build universal app
+        run: ./verify.sh
+
+      - name: Package app
+        id: package
+        shell: bash
+        run: |
+          if [[ "${GITHUB_REF_TYPE:-}" == "tag" ]]; then
+            version="${GITHUB_REF_NAME#v}"
+          else
+            version="development"
+          fi
+          archive_name="Nuni-${version}-macos-universal.zip"
+          ditto -c -k --sequesterRsrc --keepParent build/Nuni.app "build/${archive_name}"
+          shasum -a 256 "build/${archive_name}" > "build/${archive_name}.sha256"
+          echo "archive_name=${archive_name}" >> "$GITHUB_OUTPUT"
+
+      - name: Upload workflow artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: Nuni-macOS-universal
+          path: |
+            build/${{ steps.package.outputs.archive_name }}
+            build/${{ steps.package.outputs.archive_name }}.sha256
+          if-no-files-found: error
+          retention-days: 30
+
+      - name: Publish tagged build to GitHub Releases
+        if: startsWith(github.ref, 'refs/tags/v')
+        env:
+          GH_TOKEN: ${{ github.token }}
+        shell: bash
+        run: |
+          if ! gh release view "$GITHUB_REF_NAME" >/dev/null 2>&1; then
+            gh release create "$GITHUB_REF_NAME" \
+              --title "Nuni ${GITHUB_REF_NAME#v}" \
+              --notes "Universal macOS build for Apple Silicon and Intel. This build is ad-hoc signed and is not Apple-notarized."
+          fi
+          gh release upload "$GITHUB_REF_NAME" \
+            "build/${{ steps.package.outputs.archive_name }}" \
+            "build/${{ steps.package.outputs.archive_name }}.sha256" \
+            --clobber
