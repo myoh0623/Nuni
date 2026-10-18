@@ -18,6 +18,11 @@ jobs:
       - name: Check out source
         uses: actions/checkout@v4
 
+      - name: Select bundled Xcode toolchain
+        run: |
+          sudo xcode-select --switch /Applications/Xcode.app/Contents/Developer
+          xcrun swiftc --version
+
       - name: Test and build universal app
         run: ./verify.sh
 
